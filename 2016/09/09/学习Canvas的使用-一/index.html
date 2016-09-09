@@ -25,7 +25,7 @@
 <meta property="og:description" content="Canvas##Canvas 的获取方法有两种：  
 1.使用 Bitmap 创建一个位图,在这个位图上创建一个 Canvas ：Bitmap b = Bitmap.createBitmap(100,100,Bitmap.Config.ARGB_8888);Canvas c = new Canvas(b);创建一个尺寸是100*100的 Bitmap，使之作为 Canvas 的操作对象。2.通过重">
 <meta property="og:image" content="http://yoursite.com/canvasClock.png">
-<meta property="og:updated_time" content="2016-09-09T09:24:09.300Z">
+<meta property="og:updated_time" content="2016-09-09T10:09:54.180Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="学习Canvas的使用(一) | Hxzy">
 <meta name="twitter:description" content="Canvas##Canvas 的获取方法有两种：  
@@ -190,7 +190,7 @@ class CanvasView extends View{
         paint.setColor(Color.BLACK); //设置画笔的颜色位黑色  
         paint.setStrokeJoin(Paint.Join.ROUND); //设置连接处为圆弧  
         paint.setStrokeCap(Paint.Cap.ROUND); //设置画笔样式为圆形样式  
-        paint.setStrokeWidth(1); //设置画笔的宽度为1  
+        paint.setStrokeWidth(4); //设置画笔的描边宽度为4  
     }   
 
     //重写onDraw方法，我们可以在这里通过Canvas绘制图形   
@@ -203,10 +203,64 @@ class CanvasView extends View{
 </code></pre><p>###基础图形 </p>
 <p>##<br>参考<a href="http://www.jcodecraeer.com/a/anzhuokaifa/androidkaifa/2012/1212/703.html" target="_blank" rel="external">Android Canvas绘图详解（图文）</a><br>文章详细讲解了Canvas绘制点、线、弧、矩形等基础图形。  </p>
 <p>###简单应用 </p>
-<h2 id=""><a href="#" class="headerlink" title=" "></a> </h2><p><strong>一、时钟</strong></p>
+<h2 id=""><a href="#" class="headerlink" title=" "></a> </h2><p><strong>时钟</strong></p>
 <p><img src="canvasClock.png" alt="">  </p>
-<p>1、了解了基础图形，现在要针对这个图形进行绘制，首先对图形进行拆分，对该图形的绘制有一个大致的思路：<br>(1) 画表盘，即画一个圆，使用方法 <code>Canvas.drawCircle(x,y,r,paint)</code>；<br>(2) 在规定路径上绘制文本，使用方法 <code>Canvas.drawTextOnPath (text,path,hOffset,vOffset,paint)</code> ，基本图形中介绍了一种在路径上绘制文本的方法，但是路径为直线路径，而图形中为圆弧路径，所以要使用 <code>Path.addArc()</code> 的方法来添加圆弧路径；<br>(3) 绘制刻度，即画线，使用方法 <code>Canvas.drawLine(startX,startY,endX,endY,paint)</code>;<br>(4) 绘制时针， 即画线、画圆，方法同上。<br>2、有了上述的方法，各个图形只是一堆零散的器件，无法按想象中的组合在一起，这个时候需要使用参考坐标，即中心点，在这个图形中很容易看出，</p>
+<p><strong>1、找画布参考坐标</strong><br>绘制图形就像画画一样，得到一个模具要找到下笔的位置，即参考坐标，在这个图形中很容易看出，所有的图形围绕表盘中心有规律的出现，所以要以表盘中心为画布参考坐标，使用方法 <code>Canvas.translate(x,y)</code> ，将画布中心移动到表盘的中心坐标 <code>(x,y)</code> 。<br><strong>2、拆分图形</strong><br>了解了基础图形，现在要针对这个图形进行绘制，首先对图形进行拆分，对该图形的绘制有一个大致的思路：<br>(1) 画表盘，即画一个圆，使用方法 <code>Canvas.drawCircle(x,y,r,paint)</code>；<br>(2) 在规定路径上绘制文本，使用方法 <code>Canvas.drawTextOnPath (text,path,hOffset,vOffset,paint)</code> ，基本图形中介绍了一种在路径上绘制文本的方法，但是路径为直线路径，而图形中为圆弧路径，所以要使用 <code>Path.addArc()</code> 的方法来添加圆弧路径；<br>(3) 绘制刻度，即画线，使用方法 <code>Canvas.drawLine(startX,startY,endX,endY,paint)</code>;<br>(4) 绘制时针， 即画线、画圆，方法同上。<br><strong>3、绘制图形</strong><br>做好以上准备工作，就可以在 <code>onDraw();</code> 方法中绘制想要的图形了，参考代码如下：</p>
+<pre><code>@Override   
+protected void onDraw(Canvas canvas) {   
 
+paint.setAntiAlias(true);//画笔抗锯齿   
+paint.setStyle(Style.STROKE); //画笔样式为描边  
+canvas.translate(canvas.getWidth()/2, 200); //设置参考坐标，将位置移动画纸的坐标点:（二分之一画布的宽度，200）   
+canvas.drawCircle(0, 0, 100, paint); //在画布中心画表盘，半径为100      
+canvas.save(); //保存画布
+
+//使用path绘制路径文字  
+canvas.translate(-75, -75); //将画布中心移动到当前(-75,-75)坐标处  
+RectF rectf = new RectF(0,0,150,150); //画一个正方形，边长150
+Path path = new Path();  //新建一个路径 
+path.addArc(rectf, -180, 180); //在正方形中截取起始位置为-180°的大小为180度的弧，即正方形上半部分，添加到路径中  
+Paint citePaint = new Paint(paint); //在paint画笔上新建一个画笔，继承paint画笔原有属性  
+citePaint.setTextSize(14); //设置文本大小  
+citePaint.setStrokeWidth(1); //设置描边宽度  
+canvas.drawTextOnPath(&quot;http://www.android777.com&quot;, path, 28, 0, citePaint); //在路径上绘制文本，水平偏移量为28，即不是直接从弧的起点开始绘制文本，向右偏移28  
+canvas.restore(); //源码显示，restore()方法读取了上一个save()时Canvas所保持的状态，在这里将画布中心重新变为表盘中心  
+
+Paint tmpPaint = new Paint(paint); //小刻度画笔对象   
+tmpPaint.setStrokeWidth(1);   
+
+float  y=100; //表盘半径，下面代码会用到  
+int count = 60; //总刻度数   
+
+//绘制刻度，从0开始，当刻度为5的倍数，即为显示文本的长刻度，否则为短刻度                                                                                                     
+for(int i=0 ; i &lt;count ; i++){   
+    if(i%5 == 0){
+        //绘制长刻度线，起始坐标为(0,y)，画一条长度12的线   
+        canvas.drawLine(0f, y, 0, y+12f, paint);  
+        //绘制长刻度线文本
+        //起始坐标为(-4,y+25)比长刻度偏左4个坐标为了当刻度为两位时看起来好看一些
+        //比长刻度线偏下(25-12)个坐标，为了不让文本与刻度线重叠
+        canvas.drawText(String.valueOf(i/5+1), -4f, y+25f, tmpPaint);   
+
+    }else{   
+        //绘制短刻度线，起始坐标为(0,y)，画一条长度5的线 
+        canvas.drawLine(0f, y, 0f, y +5f, tmpPaint);   
+    }   
+    //每画一条刻度线，画布旋转360/60度
+    canvas.rotate(360/count,0f,0f);    
+}   
+
+//绘制指针   
+tmpPaint.setColor(Color.GRAY);   
+tmpPaint.setStrokeWidth(4);   
+canvas.drawCircle(0, 0, 7, tmpPaint);   
+tmpPaint.setStyle(Style.FILL); //画笔样式为填充  
+tmpPaint.setColor(Color.YELLOW);   
+canvas.drawCircle(0, 0, 5, tmpPaint);   
+canvas.drawLine(0, 10, 0, -65, paint);   
+
+}
+</code></pre>
   </section>
 
   
