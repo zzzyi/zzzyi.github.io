@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    
+
+    <title>
+      学习Canvas的使用(一) | Hxzy 
+    </title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    
+      <meta name="author" content="zy">
+    
+    
+
+    <meta name="description" content="Canvas##Canvas 的获取方法有两种：  
+1.使用 Bitmap 创建一个位图,在这个位图上创建一个 Canvas ：Bitmap b = Bitmap.createBitmap(100,100,Bitmap.Config.ARGB_8888);Canvas c = new Canvas(b);创建一个尺寸是100*100的 Bitmap，使之作为 Canvas 的操作对象。2.通过重">
+<meta property="og:type" content="article">
+<meta property="og:title" content="学习Canvas的使用(一) | Hxzy">
+<meta property="og:url" content="http://yoursite.com/2016/09/09/学习Canvas的使用-一/index.html">
+<meta property="og:site_name" content="Hxzy">
+<meta property="og:description" content="Canvas##Canvas 的获取方法有两种：  
+1.使用 Bitmap 创建一个位图,在这个位图上创建一个 Canvas ：Bitmap b = Bitmap.createBitmap(100,100,Bitmap.Config.ARGB_8888);Canvas c = new Canvas(b);创建一个尺寸是100*100的 Bitmap，使之作为 Canvas 的操作对象。2.通过重">
+<meta property="og:image" content="http://yoursite.com/canvasClock.png">
+<meta property="og:updated_time" content="2016-09-09T09:24:09.300Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="学习Canvas的使用(一) | Hxzy">
+<meta name="twitter:description" content="Canvas##Canvas 的获取方法有两种：  
+1.使用 Bitmap 创建一个位图,在这个位图上创建一个 Canvas ：Bitmap b = Bitmap.createBitmap(100,100,Bitmap.Config.ARGB_8888);Canvas c = new Canvas(b);创建一个尺寸是100*100的 Bitmap，使之作为 Canvas 的操作对象。2.通过重">
+<meta name="twitter:image" content="http://yoursite.com/canvasClock.png">
+    
+    
+    
+      <link rel="icon" type="image/x-icon" href="/favicon.png">
+    
+    <link rel="stylesheet" href="/css/uno.css">
+    <link rel="stylesheet" href="/css/highlight.css">
+    <link rel="stylesheet" href="/css/archive.css">
+    <link rel="stylesheet" href="/css/china-social-icon.css">
+
+</head>
+<body>
+
+    <span class="mobile btn-mobile-menu">
+        <i class="icon icon-list btn-mobile-menu__icon"></i>
+        <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+    
+
+<header class="panel-cover panel-cover--collapsed">
+
+
+  <div class="panel-main">
+
+  
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        
+
+        <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage">Hxzy</a></h1>
+        <hr class="panel-cover__divider" />
+
+        
+
+        <div class="navigation-wrapper">
+
+          <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+
+              
+                
+                <li class="navigation__item"><a href="/#blog" title="" class="blog-button">首页</a></li>
+              
+                
+                <li class="navigation__item"><a href="/about" title="" class="">关于</a></li>
+              
+                
+                <li class="navigation__item"><a href="/archive" title="" class="">归档</a></li>
+              
+
+            </ul>
+          </nav>
+
+          <!-- ----------------------------
+To add a new social icon simply duplicate one of the list items from below
+and change the class in the <i> tag to match the desired social network
+and then add your link to the <a>. Here is a full list of social network
+classes that you can use:
+
+    icon-social-500px
+    icon-social-behance
+    icon-social-delicious
+    icon-social-designer-news
+    icon-social-deviant-art
+    icon-social-digg
+    icon-social-dribbble
+    icon-social-facebook
+    icon-social-flickr
+    icon-social-forrst
+    icon-social-foursquare
+    icon-social-github
+    icon-social-google-plus
+    icon-social-hi5
+    icon-social-instagram
+    icon-social-lastfm
+    icon-social-linkedin
+    icon-social-medium
+    icon-social-myspace
+    icon-social-path
+    icon-social-pinterest
+    icon-social-rdio
+    icon-social-reddit
+    icon-social-skype
+    icon-social-spotify
+    icon-social-stack-overflow
+    icon-social-steam
+    icon-social-stumbleupon
+    icon-social-treehouse
+    icon-social-tumblr
+    icon-social-twitter
+    icon-social-vimeo
+    icon-social-xbox
+    icon-social-yelp
+    icon-social-youtube
+    icon-social-zerply
+    icon-mail
+
+-------------------------------->
+
+<!-- add social info here -->
+
+
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="panel-cover--overlay"></div>
+  </div>
+</header>
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner entry">
+            
+
+<article class="post-container post-container--single">
+
+  <header class="post-header">
+    
+    <h1 class="post-title">学习Canvas的使用(一)</h1>
+
+    
+
+    <div class="post-meta">
+      <time datetime="2016-09-09" class="post-meta__date date">2016-09-09</time> 
+
+      <span class="post-meta__tags tags">
+
+          
+
+          
+
+      </span>
+    </div>
+    
+    
+
+  </header>
+
+  <section id="post-content" class="article-content post">
+    <h3 id="Canvas"><a href="#Canvas" class="headerlink" title="Canvas"></a>Canvas</h3><p>##<br><code>Canvas</code> 的获取方法有两种：  </p>
+<p>1.使用 <code>Bitmap</code> 创建一个位图,在这个位图上创建一个 <code>Canvas</code> ：<br><code>Bitmap b = Bitmap.createBitmap(100,100,Bitmap.Config.ARGB_8888);</code><br><code>Canvas c = new Canvas(b);</code><br>创建一个尺寸是100*100的 <code>Bitmap</code>，使之作为 <code>Canvas</code> 的操作对象。<br>2.通过重写 <code>View.onDraw</code> 方法，<code>View</code> 中的 <code>Canvas</code> 会被当做参数传递过来，我们可以直接在 <code>View</code> 中操作这个 <code>Canvas</code> 。   </p>
+<pre><code>/**   
+ * 自定义一个简单的View   
+ */
+class CanvasView extends View{   
+
+    Paint paint;   
+
+    public CustomView1(Context context) {   
+        super(context);   
+        paint = new Paint(); //设置一个画笔   
+        paint.setColor(Color.BLACK); //设置画笔的颜色位黑色  
+        paint.setStrokeJoin(Paint.Join.ROUND); //设置连接处为圆弧  
+        paint.setStrokeCap(Paint.Cap.ROUND); //设置画笔样式为圆形样式  
+        paint.setStrokeWidth(1); //设置画笔的宽度为1  
+    }   
+
+    //重写onDraw方法，我们可以在这里通过Canvas绘制图形   
+    @Override   
+    protected void onDraw(Canvas canvas) {   
+
+    }   
+
+} 
+</code></pre><p>###基础图形 </p>
+<p>##<br>参考<a href="http://www.jcodecraeer.com/a/anzhuokaifa/androidkaifa/2012/1212/703.html" target="_blank" rel="external">Android Canvas绘图详解（图文）</a><br>文章详细讲解了Canvas绘制点、线、弧、矩形等基础图形。  </p>
+<p>###简单应用 </p>
+<h2 id=""><a href="#" class="headerlink" title=" "></a> </h2><p><strong>一、时钟</strong></p>
+<p><img src="canvasClock.png" alt="">  </p>
+<p>1、了解了基础图形，现在要针对这个图形进行绘制，首先对图形进行拆分，对该图形的绘制有一个大致的思路：<br>(1) 画表盘，即画一个圆，使用方法 <code>Canvas.drawCircle(x,y,r,paint)</code>；<br>(2) 在规定路径上绘制文本，使用方法 <code>Canvas.drawTextOnPath (text,path,hOffset,vOffset,paint)</code> ，基本图形中介绍了一种在路径上绘制文本的方法，但是路径为直线路径，而图形中为圆弧路径，所以要使用 <code>Path.addArc()</code> 的方法来添加圆弧路径；<br>(3) 绘制刻度，即画线，使用方法 <code>Canvas.drawLine(startX,startY,endX,endY,paint)</code>;<br>(4) 绘制时针， 即画线、画圆，方法同上。<br>2、有了上述的方法，各个图形只是一堆零散的器件，无法按想象中的组合在一起，这个时候需要使用参考坐标，即中心点，在这个图形中很容易看出，</p>
+
+  </section>
+
+  
+  
+</article>
+
+
+            <footer class="footer">
+
+    <span class="footer__copyright">&copy; 2014-2015. | 由<a href="https://hexo.io/">Hexo</a>强力驱动 | 主题<a href="https://github.com/someus/huno">Huno</a></span>
+    
+</footer>
+        </div>
+    </div>
+
+    <!-- js files -->
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/main.js"></script>
+    <script src="/js/scale.fix.js"></script>
+    
+
+    
+
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript"> 
+        $(document).ready(function(){
+            MathJax.Hub.Config({ 
+                tex2jax: {inlineMath: [['[latex]','[/latex]'], ['\\(','\\)']]} 
+            });
+        });
+    </script>
+
+
+    
+
+    <script src="/js/awesome-toc.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $.awesome_toc({
+                overlay: true,
+                contentId: "post-content",
+            });
+        });
+    </script>
+
+
+    
+    
+    <!--kill ie6 -->
+<!--[if IE 6]>
+  <script src="//letskillie6.googlecode.com/svn/trunk/2/zh_CN.js"></script>
+<![endif]-->
+
+</body>
+</html>
